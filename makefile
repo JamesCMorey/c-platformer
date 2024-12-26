@@ -1,2 +1,2 @@
 a.out:*.c *.h
-	gcc *.c -lncursesw
+	gcc *.c -g -lncursesw
