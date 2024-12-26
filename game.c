@@ -25,13 +25,22 @@ bool gs_running(struct GameState *gs) {
 }
 
 void gs_update(struct GameState *gs) {
+
     if (!gs->running)
         return;
 
-    //pl_change_dy_by(GRAVITY);
+    struct Player *player = gs->player;
+
+    pl_dy_add(player, GRAVITY);
+    pl_y_add(player, pl_dy(player));
+    pl_x_add(player, pl_dx(player));
+
+    if (pl_y(player) > 20) {
+        pl_y_set(player, 19);
+    }
 }
 
-void gs_add_tick(struct GameState *gs) {
+void gs_tick_add(struct GameState *gs) {
     gs->tick_num++;
 }
 
@@ -43,3 +52,5 @@ void gs_free(struct GameState *gs) {
     pl_free(gs->player);
     free(gs);
 }
+
+struct Player *gs_player(struct GameState *gs) { return gs->player; }
