@@ -1,5 +1,6 @@
 #include "player.h"
 #include <stdlib.h>
+#include <stdbool.h>
 
 /* Accessors */
 int pl_dx(struct Player *p) { return p->dx; }

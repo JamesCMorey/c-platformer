@@ -3,6 +3,7 @@
 #include "stage.h"
 #include <stdlib.h>
 #include <stdbool.h>
+#include <ncurses.h>
 
 struct GameState *gs_init() {
     struct GameState *gs = malloc(sizeof(struct GameState));
@@ -35,13 +36,19 @@ void gs_update(struct GameState *gs) {
 
     pl_dy_add(player, GRAVITY);
 
-    //pl_y_add(player, pl_dy(player));
-    //pl_x_add(player, pl_dx(player));
-
     int dy = pl_dy(player);
     int dx = pl_dx(player);
     while (dy != 0 || dx != 0) {
-        if (dx < 0) {
+
+        if (pl_x(player) < 0) {
+            pl_x_set(player, pl_x(player) + 1);
+            pl_dx_set(player, 0);
+        }
+        else if (pl_x(player) >= getmaxx(stdscr)) {
+            pl_x_set(player, pl_x(player) - 1);
+            pl_dx_set(player, 0);
+        }
+        else if (dx < 0) {
             pl_x_add(player, -1);
             dx++;
         }
@@ -59,17 +66,20 @@ void gs_update(struct GameState *gs) {
             dy--;
         }
 
-        if (stage_grid(gs->stage)[pl_y(player)][pl_x(player)] == '#') {
+        if (pl_y(player) >= getmaxy(stdscr)) {
             pl_y_set(player, pl_y(player) - 1);
-            pl_dy_set(player, 1);
-            break;
+            pl_dy_set(player, 0);
+        }
+        else if (pl_y(player) <= 0) {
+            pl_y_set(player, pl_y(player) + 1);
+            pl_dy_set(player, 0);
+        }
+        /* On ground */
+        else if (stage_grid(gs->stage)[pl_y(player)][pl_x(player)] == '#') {
+            pl_y_set(player, pl_y(player) - 1);
+            pl_dy_set(player, 0);
         }
     }
-
-    //if (pl_y(player) > 19) {
-    //    pl_y_set(player, 19);
-    //    pl_dy_set(player, 1);
-    //}
 }
 
 void gs_tick_add(struct GameState *gs) {

@@ -1,5 +1,7 @@
 #pragma once
 
+#include <stdbool.h>
+
 struct Player {
     int y, x;
     int dy, dx;
