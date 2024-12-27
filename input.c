@@ -9,7 +9,15 @@ void in_handle(struct GameState *gs) {
 
     switch(c) {
         case 'w':
-            pl_dy_set(gs_player(gs), JUMP_VELO);
+            if (pl_grounded(gs_player(gs))) {
+                pl_grounded_set(gs_player(gs), false);
+                pl_dy_set(gs_player(gs), JUMP_VELO);
+            }
+            else if (!pl_airjumped(gs_player(gs))) {
+                pl_grounded_set(gs_player(gs), false);
+                pl_dy_set(gs_player(gs), JUMP_VELO);
+                pl_airjumped_set(gs_player(gs), true);
+            }
             break;
         case 'a':
             pl_dx_set(gs_player(gs), -SIDEWAYS_VELO);

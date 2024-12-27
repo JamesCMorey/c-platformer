@@ -76,6 +76,8 @@ void gs_update(struct GameState *gs) {
         }
         /* On ground */
         else if (stage_grid(gs->stage)[pl_y(player)][pl_x(player)] == '#') {
+            pl_grounded_set(player, true);
+            pl_airjumped_set(player, false);
             pl_y_set(player, pl_y(player) - 1);
             pl_dy_set(player, 0);
         }

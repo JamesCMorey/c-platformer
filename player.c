@@ -24,8 +24,16 @@ struct Player *pl_init() {
     struct Player *p = malloc(sizeof(struct Player));
     p->x = 0;
     p->y = 0;
+    p->grounded = false;
+    p->airjumped = false;
 
     return p;
 }
 
 void pl_free(struct Player *p) { free(p); }
+
+void pl_grounded_set(struct Player *p, bool grounded){ p->grounded = grounded; }
+void pl_airjumped_set(struct Player *p, bool airjumped) { p->airjumped = airjumped; }
+
+bool pl_grounded(struct Player *p){ return p->grounded; }
+bool pl_airjumped(struct Player *p) { return p->airjumped; }
