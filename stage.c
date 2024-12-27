@@ -1,5 +1,6 @@
 #include "stage.h"
 #include "game.h"
+#include "player.h"
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
@@ -17,24 +18,23 @@ struct Stage *stage_new() {
     return s;
 }
 
-struct Stage *stage_load(char *filename) {
+struct Stage *stage_load(struct GameState *gs, char *filename) {
     struct Stage *s = stage_new();
 
     char buf[100];
     FILE *stage_file = fopen(filename, "r");
 
-    bool ground = false, enemies = false;
     int row, start, end;
     while (fgets(buf, sizeof(buf), stage_file)) {
         if (strncmp(buf, "GROUND", sizeof("GROUND") - 1) == 0) {
-            ground = true;
-            enemies = false;
             sscanf(buf + sizeof("GROUND"), "%d, %d-%d", &row, &start, &end);
             stage_set_row(s, row, start, end, '#');
         }
         else if (strncmp(buf, "ENEMIES", sizeof("ENEMIES") - 1) == 0) {
-            ground = false;
-            enemies = true;
+        } else if(strncmp(buf, "PLAYER", sizeof("PLAYER") - 1) == 0) {
+            sscanf(buf + sizeof("PLAYER"), "%d, %d", &start, &end);
+            pl_x_set(gs_player(gs), start);
+            pl_y_set(gs_player(gs), end);
         }
     }
 

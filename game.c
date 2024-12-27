@@ -8,7 +8,7 @@
 struct GameState *gs_init() {
     struct GameState *gs = malloc(sizeof(struct GameState));
     gs->player = pl_init();
-    gs->stage = stage_load("1st.st");
+    gs->stage = stage_load(gs, "1st.st");
     gs->running = true;
     gs->game_over = false;
     gs->tick_num = 0;
@@ -67,8 +67,10 @@ void gs_update(struct GameState *gs) {
         }
 
         if (pl_y(player) >= getmaxy(stdscr)) {
+            pl_grounded_set(player, true);
+            pl_airjumped_set(player, false);
             pl_y_set(player, pl_y(player) - 1);
-            pl_dy_set(player, 0);
+            pl_dy_set(player, 1);
         }
         else if (pl_y(player) <= 0) {
             pl_y_set(player, pl_y(player) + 1);

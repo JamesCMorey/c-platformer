@@ -10,8 +10,6 @@ int main(int argc, char *argv[]) {
     initscr(); cbreak(); noecho(); nodelay(stdscr, TRUE);
 
     struct GameState *gs = gs_init();
-    pl_x_set(gs_player(gs), 10);
-    pl_y_set(gs_player(gs), 10);
 
     unsigned int t_accum = 0;
     unsigned int t_now, t_prev = t_ms_get();

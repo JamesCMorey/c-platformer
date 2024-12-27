@@ -22,6 +22,9 @@ void in_handle(struct GameState *gs) {
         case 'a':
             pl_dx_set(gs_player(gs), -SIDEWAYS_VELO);
             break;
+        case 's':
+            pl_dx_set(gs_player(gs), 0);
+            break;
         case 'd':
             pl_dx_set(gs_player(gs), SIDEWAYS_VELO);
             break;
