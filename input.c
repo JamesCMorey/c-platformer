@@ -8,15 +8,15 @@ void in_handle(struct GameState *gs) {
 
     switch(c) {
         case 'w':
-            pl_dy_set(gs_player(gs), -3);
+            pl_dy_set(gs_player(gs), JUMP_VELO);
             break;
         case 'a':
-            pl_dx_set(gs_player(gs), -3);
+            pl_dx_set(gs_player(gs), -SIDEWAYS_VELO);
             break;
         case 's': /* No point in platformer */
             break;
         case 'd':
-            pl_dx_set(gs_player(gs), 3);
+            pl_dx_set(gs_player(gs), SIDEWAYS_VELO);
             break;
         case 'q':
             gs_quit(gs);

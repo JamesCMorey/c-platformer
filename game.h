@@ -3,6 +3,8 @@
 #include <stdbool.h>
 
 #define GRAVITY 1
+#define JUMP_VELO -4
+#define SIDEWAYS_VELO 3
 
 struct GameState {
     struct Player *player;

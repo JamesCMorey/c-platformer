@@ -15,11 +15,8 @@ void ui_render(struct GameState *gs) {
 void ui_stage_draw(struct GameState *gs) {
     for(int row = 0; row < getmaxy(stdscr); row++) {
         for(int col = 0; col < getmaxx(stdscr); col++) {
-            //if (gs->stage->grid[row][col] == '#') {
-            //    mvprintw(row, col, "#");
-            //}
+            // TODO: Fix interface violation
             mvprintw(row, col, "%c", gs->stage->grid[row][col]);
         }
     }
-    //mvhline(20, 0, '-', 200);
 }

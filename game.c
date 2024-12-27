@@ -34,13 +34,42 @@ void gs_update(struct GameState *gs) {
     struct Player *player = gs->player;
 
     pl_dy_add(player, GRAVITY);
-    pl_y_add(player, pl_dy(player));
-    pl_x_add(player, pl_dx(player));
 
-    if (pl_y(player) > 19) {
-        pl_y_set(player, 19);
-        pl_dy_set(player, 1);
+    //pl_y_add(player, pl_dy(player));
+    //pl_x_add(player, pl_dx(player));
+
+    int dy = pl_dy(player);
+    int dx = pl_dx(player);
+    while (dy != 0 || dx != 0) {
+        if (dx < 0) {
+            pl_x_add(player, -1);
+            dx++;
+        }
+        else if (dx > 0){
+            pl_x_add(player, 1);
+            dx--;
+        }
+
+        if (dy < 0) {
+            pl_y_add(player, -1);
+            dy++;
+        }
+        else if (dy > 0){
+            pl_y_add(player, 1);
+            dy--;
+        }
+
+        if (stage_grid(gs->stage)[pl_y(player)][pl_x(player)] == '#') {
+            pl_y_set(player, pl_y(player) - 1);
+            pl_dy_set(player, 1);
+            break;
+        }
     }
+
+    //if (pl_y(player) > 19) {
+    //    pl_y_set(player, 19);
+    //    pl_dy_set(player, 1);
+    //}
 }
 
 void gs_tick_add(struct GameState *gs) {

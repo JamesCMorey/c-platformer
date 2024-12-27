@@ -60,3 +60,5 @@ void stage_set_row(struct Stage *s, int row, int start, int end, char c) {
         s->grid[row][start + i] = c;
     }
 }
+
+char **stage_grid(struct Stage *s) { return s->grid; }
